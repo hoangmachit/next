@@ -1,0 +1,169 @@
+.label_year {
+    display: inline-block;
+    padding: 0px 10px;
+    border-radius: 3px;
+    background: #2fb344 !important;
+    border: 1px solid #2fb344;
+    margin: 0px;
+    font-size: 13px;
+    color: #fff;
+    line-height: 24px;
+    height: 28px;
+}
+
+.no-drop {
+    cursor: no-drop;
+}
+
+.label_year.pending {
+    background: #7c0b0b !important;
+    border: 1px solid #7c0b0b;
+    color: #fff;
+}
+
+.label_year.public {
+    background: #2fb344 !important;
+    border: 1px solid #2fb344;
+}
+
+.label_year.private {
+    background: #000 !important;
+    border: 1px solid #000;
+}
+
+.domain_name {
+    display: inline-block;
+    padding: 0px 10px;
+    border-radius: 3px;
+    background: #7c0b0b !important;
+    border: 1px solid #7c0b0b;
+    margin: 0px;
+    font-size: 13px;
+    color: #fff;
+    line-height: 24px;
+    height: 28px;
+}
+
+table#table_contracts tr,
+table#table_contracts td {
+    cursor: pointer !important;
+}
+
+.icon-svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-svg svg {
+    display: block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.icon-svg svg path {
+    fill: #000;
+}
+
+.icon-svg .svg.active path {
+    fill: #2fb344;
+}
+
+.action-show-all .svg {
+    margin-right: 5px;
+}
+
+.btn-show-search {
+    width: 100%;
+}
+
+.contract-code, .title-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    margin: 0;
+    color: #333333;
+}
+
+.btn-search {
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.btn-language {
+    padding: 0.4rem 0rem;
+    margin: 0px;
+}
+
+h3.title-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 150px;
+    text-transform: capitalize;
+}
+.split-w150{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 150px;
+    display: block;
+}
+
+/* Loader */
+.loader-wrapper{z-index:99999999;position:fixed;top:0;left:0;bottom:0;right:0;width:100%;height:100%;background:#eee;overflow:hidden;text-align:center}
+.loader-wrapper .loader-admin{position:relative;top:calc(50% - 30px)}
+.loader-wrapper .loader-admin p{font-size:13px;margin-top:10px;font-weight:700;color:#444}
+.loader-wrapper .loader-admin .preloader{display:inline-block;position:relative;width:50px;height:50px;-webkit-animation:container-rotate 1568ms linear infinite;animation:container-rotate 1568ms linear infinite}
+.loader-wrapper .loader-admin .preloader .spinner-layer{position:absolute;width:100%;height:100%;border-color:#007bff;-ms-opacity:1;opacity:1;-webkit-animation:fill-unfill-rotate 5332ms cubic-bezier(.4,0,.2,1) infinite both;animation:fill-unfill-rotate 5332ms cubic-bezier(.4,0,.2,1) infinite both}
+.loader-wrapper .loader-admin .preloader .spinner-layer .circle-clipper{display:inline-block;position:relative;width:50%;height:100%;overflow:hidden;border-color:inherit}
+.loader-wrapper .loader-admin .preloader .spinner-layer .circle-clipper .circle{width:200%;height:100%;border-width:3px;border-style:solid;border-color:inherit;border-bottom-color:transparent!important;border-radius:50%;-webkit-animation:none;animation:none;position:absolute;top:0;right:0;bottom:0}
+.loader-wrapper .loader-admin .preloader .spinner-layer .circle-clipper.float-left .circle{left:0;border-right-color:transparent!important;-webkit-transform:rotate(129deg);transform:rotate(129deg);-webkit-animation:left-spin 1333ms cubic-bezier(.4,0,.2,1) infinite both;animation:left-spin 1333ms cubic-bezier(.4,0,.2,1) infinite both}
+.loader-wrapper .loader-admin .preloader .spinner-layer .circle-clipper.float-right .circle{left:-100%;border-left-color:transparent!important;-webkit-transform:rotate(-129deg);transform:rotate(-129deg);-webkit-animation:right-spin 1333ms cubic-bezier(.4,0,.2,1) infinite both;animation:right-spin 1333ms cubic-bezier(.4,0,.2,1) infinite both}
+@-webkit-keyframes container-rotate{
+	to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}
+}
+@keyframes container-rotate{
+	to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}
+}
+@-webkit-keyframes fill-unfill-rotate{
+	12.5%{-webkit-transform:rotate(135deg);transform:rotate(135deg)}
+	25%{-webkit-transform:rotate(270deg);transform:rotate(270deg)}
+	37.5%{-webkit-transform:rotate(405deg);transform:rotate(405deg)}
+	50%{-webkit-transform:rotate(540deg);transform:rotate(540deg)}
+	62.5%{-webkit-transform:rotate(675deg);transform:rotate(675deg)}
+	75%{-webkit-transform:rotate(810deg);transform:rotate(810deg)}
+	87.5%{-webkit-transform:rotate(945deg);transform:rotate(945deg)}
+	to{-webkit-transform:rotate(1080deg);transform:rotate(1080deg)}
+}
+@keyframes fill-unfill-rotate{
+	12.5%{-webkit-transform:rotate(135deg);transform:rotate(135deg)}
+	25%{-webkit-transform:rotate(270deg);transform:rotate(270deg)}
+	37.5%{-webkit-transform:rotate(405deg);transform:rotate(405deg)}
+	50%{-webkit-transform:rotate(540deg);transform:rotate(540deg)}
+	62.5%{-webkit-transform:rotate(675deg);transform:rotate(675deg)}
+	75%{-webkit-transform:rotate(810deg);transform:rotate(810deg)}
+	87.5%{-webkit-transform:rotate(945deg);transform:rotate(945deg)}
+	to{-webkit-transform:rotate(1080deg);transform:rotate(1080deg)}
+}
+@-webkit-keyframes left-spin{
+	from{-webkit-transform:rotate(130deg);transform:rotate(130deg)}
+	50%{-webkit-transform:rotate(-5deg);transform:rotate(-5deg)}
+	to{-webkit-transform:rotate(130deg);transform:rotate(130deg)}
+}
+@keyframes left-spin{
+	from{-webkit-transform:rotate(130deg);transform:rotate(130deg)}
+	50%{-webkit-transform:rotate(-5deg);transform:rotate(-5deg)}
+	to{-webkit-transform:rotate(130deg);transform:rotate(130deg)}
+}
+@-webkit-keyframes right-spin{
+	from{-webkit-transform:rotate(-130deg);transform:rotate(-130deg)}
+	50%{-webkit-transform:rotate(5deg);transform:rotate(5deg)}
+	to{-webkit-transform:rotate(-130deg);transform:rotate(-130deg)}
+}
+@keyframes right-spin{
+	from{-webkit-transform:rotate(-130deg);transform:rotate(-130deg)}
+	50%{-webkit-transform:rotate(5deg);transform:rotate(5deg)}
+	to{-webkit-transform:rotate(-130deg);transform:rotate(-130deg)}
+}
