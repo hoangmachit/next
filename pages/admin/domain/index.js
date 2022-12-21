@@ -25,16 +25,16 @@ function Domain({ domains, domain_init }) {
     status: null
   });
   const [validate, setValidate] = useState({
-    name: "",
-    domain_name: "",
-    address: "",
-    domain_init_id: "",
-    note: "",
-    price: "",
-    price_special: "",
-    date_payment: "",
-    year: "",
-    status: ""
+    name: [],
+    domain_name: [],
+    address: [],
+    domain_init_id: [],
+    note: [],
+    price: [],
+    price_special: [],
+    date_payment: [],
+    year: [],
+    status: []
   });
   const showModal = (e) => {
     e.preventDefault();

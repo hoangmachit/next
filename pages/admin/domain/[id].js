@@ -19,16 +19,16 @@ function Domain({ domain, domain_init, id }) {
     text: ""
   });
   const [validate, setValidate] = useState({
-    name: "",
-    domain_name: "",
-    address: "",
-    domain_init_id: "",
-    note: "",
-    price: "",
-    price_special: "",
-    date_payment: "",
-    year: "",
-    status: ""
+    name: [],
+    domain_name: [],
+    address: [],
+    domain_init_id: [],
+    note: [],
+    price: [],
+    price_special: [],
+    date_payment: [],
+    year: [],
+    status: []
   });
   const handleDataDomain = (e, fields) => {
     let value = e.target.value;
