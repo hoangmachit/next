@@ -1,14 +1,111 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
+import axios from "axios";
 import AdminLayout from "../../../components/AdminLayout";
+import AdminAlert from "../../../components/AdminAlert";
+import AdminValidate from "../../../components/AdminValidate";
 import { SvgArrowDown, SvgPlus } from "../../../components/AdminIcon";
-function Domain({ domains }) {
+function Domain({ domains, domain_init }) {
   const [modal, setModal] = useState(false);
+  const [message, setMessage] = useState({
+    status: false,
+    text: ""
+  });
+  const [domain, setDomain] = useState({
+    name: null,
+    domain_name: null,
+    address: null,
+    domain_init_id: null,
+    note: null,
+    price: null,
+    price_special: null,
+    date_payment: null,
+    year: null,
+    status: null
+  });
+  const [validate, setValidate] = useState({
+    name: "",
+    domain_name: "",
+    address: "",
+    domain_init_id: "",
+    note: "",
+    price: "",
+    price_special: "",
+    date_payment: "",
+    year: "",
+    status: ""
+  });
   const showModal = (e) => {
     e.preventDefault();
     setModal(!modal);
   };
+  const changeDataSubmit = (e, fields) => {
+    let value = e.target.value;
+    switch (fields) {
+      case 'name':
+        domain.name = value;
+        break;
+      case 'domain_name':
+        domain.domain_name = value;
+        break;
+      case 'address':
+        domain.address = value;
+        break;
+      case 'domain_init_id':
+        domain.domain_init_id = parseInt(value);
+        break;
+      case 'note':
+        domain.note = value;
+        break;
+      case 'price':
+        domain.price = value;
+        break;
+      case 'price_special':
+        domain.price_special = value;
+        break;
+      case 'date_payment':
+        domain.date_payment = value;
+        break;
+      case 'year':
+        domain.year = parseInt(value);
+        break;
+      case 'status':
+        domain.status = parseInt(value);
+        break;
+      default:
+        break;
+    }
+    setDomain(domain);
+  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    try {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_API}/domain`, {
+          domain
+        })
+        .then(response => {
+          if (!response.data.success) {
+            setValidate(response.data.validate);
+            setMessage({
+              status: true,
+              type: "errors",
+              text: response.data.message
+            });
+            return false;
+          }
+          setMessage({
+            status: true,
+            type: "success",
+            text: response.data.message
+          });
+          setModal(false);
+        });
+    } catch (error) {
+      console.error(error);
+    };
+  }
   return (
     <>
       <Head>
@@ -40,6 +137,7 @@ function Domain({ domains }) {
               </div>
             </div>
           </div>
+          {message.status && (<AdminAlert message={message} />)}
         </div>
         <div className="col-12">
           <div className="card">
@@ -79,13 +177,6 @@ function Domain({ domains }) {
                 <thead>
                   <tr>
                     <th className="w-1">
-                      <input
-                        className="form-check-input m-0 align-middle"
-                        type="checkbox"
-                        aria-label="Select all invoices"
-                      />
-                    </th>
-                    <th className="w-1">
                       No.
                       <SvgArrowDown />
                     </th>
@@ -103,13 +194,6 @@ function Domain({ domains }) {
                       return (
                         <tr key={index}>
                           <td>
-                            <input
-                              className="form-check-input m-0 align-middle"
-                              type="checkbox"
-                              aria-label="Select invoice"
-                            />
-                          </td>
-                          <td>
                             <span className="text-muted">{index + 1}</span>
                           </td>
                           <td>
@@ -117,6 +201,7 @@ function Domain({ domains }) {
                               <Link
                                 href={`/admin/domain/${item.id}`}
                                 className="text-decation-none domain_edit"
+                                title={item.name}
                               >
                                 {item.name}
                               </Link>
@@ -166,7 +251,7 @@ function Domain({ domains }) {
             role="dialog"
           >
             <div className="modal-dialog modal-lg" role="document">
-              <form action="" method="POST" role="form">
+              <form onSubmit={handleSubmit} method="POST" role="form">
                 <div className="modal-content">
                   <div className="modal-header">
                     <h5 className="modal-title">Tạo tên miền</h5>
@@ -188,7 +273,9 @@ function Domain({ domains }) {
                         placeholder="Name"
                         defaultValue=""
                         required=""
+                        onChange={(e) => changeDataSubmit(e, 'name')}
                       />
+                      {validate && validate.name && (<AdminValidate errors={validate.name} />)}
                     </div>
                     <div className="mb-3">
                       <label className="form-label">Tên miền</label>
@@ -199,44 +286,47 @@ function Domain({ domains }) {
                         defaultValue=""
                         required=""
                         placeholder="example.com"
+                        onChange={(e) => changeDataSubmit(e, 'domain_name')}
                       />
-                      <small className="mt-2 d-block alert-domains d-none text-red">
-                        Domain name already in use !!!
-                      </small>
+                      {validate && validate.domain_name && (<AdminValidate errors={validate.domain_name} />)}
                     </div>
                     <div className="row">
                       <div className="col-lg-8">
                         <div className="mb-3">
                           <label className="form-label">Đơn vị sản xuất</label>
-                          <div className="input-group input-group-flat">
-                            <input
-                              type="text"
-                              className="form-control ps-2"
-                              defaultValue={1}
-                              required=""
-                              name="production_unit"
-                              placeholder="inet.vn"
-                              autoComplete="off"
-                            />
-                          </div>
+                          <select
+                            className="form-select"
+                            name="domain_init_id"
+                            required=""
+                            onChange={(e) => changeDataSubmit(e, 'domain_init_id')}
+                          >
+                            <option value="">Choice</option>
+                            {domain_init && domain_init.map((item, index) => {
+                              return (
+                                <option key={index} value={item.id}>{item.name}</option>
+                              );
+                            })}
+                          </select>
+                          {validate && validate.domain_init_id && (<AdminValidate errors={validate.domain_init_id} />)}
                         </div>
                       </div>
                       <div className="col-lg-4">
                         <div className="mb-3">
                           <label className="form-label">Thời hạn</label>
                           <select
-                            value="1"
                             className="form-select"
                             name="year"
                             required=""
-                            onChange={() => console.log("change thời hạn")}
+                            onChange={(e) => changeDataSubmit(e, 'year')}
                           >
+                            <option value="0">Choice</option>
                             <option value="1">1 years</option>
                             <option value="2">2 years</option>
                             <option value="3">3 years</option>
                             <option value="5">5 years</option>
                             <option value="10">10 years</option>
                           </select>
+                          {validate && validate.year && (<AdminValidate errors={validate.year} />)}
                         </div>
                       </div>
                     </div>
@@ -252,7 +342,9 @@ function Domain({ domains }) {
                             defaultValue="0"
                             className="form-control format-price"
                             required=""
+                            onChange={(e) => changeDataSubmit(e, 'price')}
                           />
+                          {validate && validate.price && (<AdminValidate errors={validate.price} />)}
                         </div>
                       </div>
                       <div className="col-lg-6">
@@ -264,7 +356,9 @@ function Domain({ domains }) {
                             defaultValue="0"
                             className="form-control format-price"
                             required=""
+                            onChange={(e) => changeDataSubmit(e, 'price_special')}
                           />
+                          {validate && validate.price_special && (<AdminValidate errors={validate.price_special} />)}
                         </div>
                       </div>
                     </div>
@@ -275,15 +369,16 @@ function Domain({ domains }) {
                         <div className="mb-3">
                           <label className="form-label">Trạng thái</label>
                           <select
-                            value="1"
                             className="form-select"
                             name="status"
-                            onChange={() => console.log("change thời hạn")}
+                            onChange={(e) => changeDataSubmit(e, 'status')}
                           >
+                            <option>Choice</option>
                             <option value="1">Private</option>
                             <option value="-1">Pending</option>
                             <option value="2">Public</option>
                           </select>
+                          {validate && validate.status && (<AdminValidate errors={validate.status} />)}
                         </div>
                       </div>
                       <div className="col-lg-6">
@@ -295,7 +390,9 @@ function Domain({ domains }) {
                             defaultValue=""
                             className="form-control"
                             required=""
+                            onChange={(e) => changeDataSubmit(e, 'date_payment')}
                           />
+                          {validate && validate.date_payment && (<AdminValidate errors={validate.date_payment} />)}
                         </div>
                       </div>
                       <div className="col-lg-12">
@@ -306,7 +403,9 @@ function Domain({ domains }) {
                             className="form-control"
                             defaultValue=""
                             name="address"
+                            onChange={(e) => changeDataSubmit(e, 'address')}
                           />
+                          {validate && validate.address && (<AdminValidate errors={validate.address} />)}
                         </div>
                       </div>
                       <div className="col-lg-12">
@@ -316,7 +415,8 @@ function Domain({ domains }) {
                             className="form-control"
                             name="note"
                             defaultValue=""
-                            rows="3"
+                            rows="5"
+                            onChange={(e) => changeDataSubmit(e, 'note')}
                           ></textarea>
                         </div>
                       </div>
@@ -348,17 +448,14 @@ function Domain({ domains }) {
   );
 }
 export async function getServerSideProps() {
-  const url = "http://localhost/system/public/api/domain";
-  const res = await fetch(url, {
-    headers: {
-      Accept: "application/json",
-    },
+  const url = `${process.env.NEXT_PUBLIC_API}/domain`;
+  const { domains, domain_init } = await axios.get(url).then(response => {
+    return response.data.result;
   });
-  const data = await res.json();
-  const { domains } = data.result;
   return {
     props: {
       domains,
+      domain_init
     },
   };
 }
